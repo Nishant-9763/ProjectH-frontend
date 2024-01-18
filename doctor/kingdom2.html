@@ -1,257 +1,736 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-        <title>doctor - Dashboard</title>
-		
-		<!-- Favicon -->
-        <link rel="shortcut icon" type="image/x-icon" href="../admin/assets/img/favicon.png">
-		
-		<!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-		
-		<!-- Fontawesome CSS -->
-        <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
-		
-		<!-- Feathericon CSS -->
-        <link rel="stylesheet" href="../assets/css/feathericon.min.css">
-		
-		<link rel="stylesheet" href="../assets/plugins/morris/morris.css">
-		
-		<!-- Main CSS -->
-        <link rel="stylesheet" href="../assets/css/custom.css">
 
-		<style>
-			.header {
-				background: none;
-				border-bottom: none;
-				z-index: 1001;
-				height: 60px;
-				position: static;
-				top: 0;
-				right: 0;
-				/* left: 18%; */
-			}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+  <title>doctor - Dashboard</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../admin/assets/img/favicon.png">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <!-- Fontawesome CSS -->
+  <link rel="stylesheet" href="../assets/css/font-awesome.min.css">
+  <!-- Feathericon CSS -->
+  <link rel="stylesheet" href="../assets/css/feathericon.min.css">
+  <link rel="stylesheet" href="../assets/plugins/morris/morris.css">
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="../assets/css/custom.css">
+  <style>
+    .custom-button {
+      background-color: #020e02;
+      /* Set your desired button color */
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
 
-			.sidebar {
-				background-color: #fff;
-				margin-top: 0;
-				-webkit-transition: all 0.2s ease-in-out 0s;
-				-ms-transition: all 0.2s ease-in-out 0s;
-				transition: all 0.2s ease-in-out 0s;
-				width: 240px;
-				z-index: 1001;
-				position: fixed;
-				top: 0px;
-				bottom: 0;
-				left: 0;
-			}
+    .custom-button:hover {
+      background-color: #011302;
+      /* Set your desired hover color */
+      transform: scale(1.1);
+    }
 
-			.sidebar .sidebar-menu > ul > li > a {
-				color: #000000;
-			}
+    /* Animation */
+    @keyframes pulseAnimation {
+      0% {
+        transform: scale(1);
+      }
 
-			.sidebar-menu ul li.active a {
-				background-color: #1c3264;
-				color: #fff;
-			}
+      50% {
+        transform: scale(1.1);
+      }
 
-			.sidebar-menu > ul > li > a:hover {
-				background-color: #1c3264 !important;
-				color: #ffffff;
-			}
+      100% {
+        transform: scale(1);
+      }
+    }
 
-			.user-header {
-				background-color: #fff !important;
-				display: flex;
-				padding: 10px 15px;
-				color: black;
-			}
+    .custom-button:hover {
+      animation: pulseAnimation 0.5s ease infinite;
+    }
 
-			.page-wrapper {
-				margin-left: 240px;
-				padding-top: 0px;
-				position: relative;
-				-webkit-transition: all 0.4s ease;
-				-ms-transition: all 0.4s ease;
-				transition: all 0.4s ease;
-			}
+    .header {
+      background: none;
+      border-bottom: none;
+      z-index: 1001;
+      height: 60px;
+      position: static;
+      top: 0;
+      right: 0;
+      /* left: 18%; */
+    }
 
-			.btns{
-				background-color: #1c3264 !important;
-				border: 1px solid #1c3264;
-			}
+    .sidebar {
+      background-color: #fff;
+      margin-top: 0;
+      -webkit-transition: all 0.2s ease-in-out 0s;
+      -ms-transition: all 0.2s ease-in-out 0s;
+      transition: all 0.2s ease-in-out 0s;
+      width: 240px;
+      z-index: 1001;
+      position: fixed;
+      top: 0px;
+      bottom: 0;
+      left: 0;
+    }
 
-			.dash-widget-icon {
-				display: inline-flex;
-				font-size: 22px;
-				height: 50px;
-				line-height: 48px;
-				text-align: center;
-				width: 50px;
-				border: none;
-				border-radius: 0;
-				padding: 28px;
-			}
+    .sidebar .sidebar-menu>ul>li>a {
+      color: #000000;
+    }
 
-            .sidebar-menu ul li a {
-                color: #000;
-                display: block;
-                font-size: 16px;
-                height: auto;
-                padding: 0 20px;
-            }
-		</style>
-        
-    </head>
-    <body>
-	
-		<!-- Main Wrapper -->
-        <div class="main-wrapper">
-		
-			<div class="header">
-				
-				<div class="header-left"></div>
-				<a href="javascript:void(0);" id="toggle_btn">
-					<i class="fe fe-text-align-left"></i>
-				</a>
-				
-				<!-- Mobile Menu Toggle -->
-				<a class="mobile_btn" id="mobile_btn">
-					<i class="fa fa-bars"></i>
-				</a>
-				<!-- /Mobile Menu Toggle -->				
-			</div>
-			<!-- /Header -->
-		
-			
-			<!-- Sidebar -->
-            <div class="sidebar" id="sidebar">
-					
-                <div class="sidebar-inner ">
-					<div id="sidebar-menu" class="sidebar-menu">
-						<ul>
-							<li class="menu-title"> 
-								<!-- Logo -->
-								<div class="m-auto">
-									<a href="index.html" class="logo">
-										<img src="../assets/img/logo.jpeg" alt="Logo">
-									</a>
-								</div>
-								<!-- /Logo -->
-								
-							</li>
-							<hr>
-							<li class="menu-title">
-								<div class="user-header">
-									<div class="avatar avatar-sm">
-										<i class="fe fe-user" style="font-size: 35px"></i>
-										<!-- <img src="assets/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle"> -->
-									</div>
-									<div class="user-text">
-										<h6>Name</h6>
-										<p class="text-muted mb-0">name@gmail.com</p>
-									</div>
-								</div>
-							</li>
-							<li class="active"> 
-								<a href="doctor-dashboard.html"><i class="fe fe-home"></i> <span>Dashboard</span></a>
-							</li>
-							<li> 
-								<a href="profile-setting.html"><i class="fe fe-user-plus"></i> <span>Profile</span></a>
-							</li>
-							<li> 
-								<a href="my-patients.html"><i class="fe fe-user-plus"></i> <span>My Patients</span></a>
-							</li>
-							<li class="submenu">
-								<a href="#"><i class="fe fe-document"></i> <span> Kingdoms</span> <span class="menu-arrow"></span></a>
-								<ul style="display: none;">
-									<li><a href="kingdom1.html">Animal</a></li>
-									<li><a href="kingdom2.html">Plant</a></li>
-									<li><a href="kingdom3.html">Minerals</a></li>
-									<li><a href="chart.html">Chart</a></li>
-									<li><a href="DonutChart.html">Doughnut Chart</a></li>
-									<li><a href="chart1.html">Histogram</a></li>
-								</ul>
-							</li>
-							<li> 
-								<a href="appointment-list.html"><i class="fe fe-layout"></i> <span>My Case</span></a>
-							</li>
-							<li>
-								<a href="#"><i class="fe fe-logout"></i> <span>Logout</span></a>
-							</li>
-						</ul>
-					</div>
+    .sidebar-menu ul li.active a {
+      background-color: #1c3264;
+      color: #fff;
+    }
+
+    .sidebar-menu>ul>li>a:hover {
+      background-color: #1c3264 !important;
+      color: #ffffff;
+    }
+
+    .user-header {
+      background-color: #fff !important;
+      display: flex;
+      padding: 10px 15px;
+      color: black;
+    }
+
+    .page-wrapper {
+      margin-left: 240px;
+      padding-top: 0px;
+      position: relative;
+      -webkit-transition: all 0.4s ease;
+      -ms-transition: all 0.4s ease;
+      transition: all 0.4s ease;
+    }
+
+    .btns {
+      background-color: #1c3264 !important;
+      border: 1px solid #1c3264;
+    }
+
+    .dash-widget-icon {
+      display: inline-flex;
+      font-size: 22px;
+      height: 50px;
+      line-height: 48px;
+      text-align: center;
+      width: 50px;
+      border: none;
+      border-radius: 0;
+      padding: 28px;
+    }
+
+    .sidebar-menu ul li a {
+      color: #000;
+      display: block;
+      font-size: 16px;
+      height: auto;
+      padding: 0 20px;
+    }
+
+    .checkbox.disabled label {
+      text-decoration: line-through;
+      color: grey;
+    }
+
+    .checkk[type="checkbox"] {
+      border: 1px solid #000;
+      border-radius: 10px;
+    }
+
+    .form-check-danger .form-check-input:checked {
+      background-color: #f46a6a;
+      border-color: #f46a6a;
+    }
+
+    .checkbox-wrapper-16 *,
+    .checkbox-wrapper-16 *:after,
+    .checkbox-wrapper-16 *:before {
+      box-sizing: border-box;
+    }
+
+    .checkbox-wrapper-16 .checkbox-input {
+      clip: rect(0 0 0 0);
+      -webkit-clip-path: inset(100%);
+      clip-path: inset(100%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
+
+    .checkbox-wrapper-16 .checkbox-input:checked+.checkbox-tile {
+      border-color: #2260ff;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      color: #2260ff;
+    }
+
+    .checkbox-wrapper-16 .checkbox-input:checked+.checkbox-tile:before {
+      transform: scale(1);
+      opacity: 1;
+      background-color: #2260ff;
+      border-color: #2260ff;
+      color: #fff;
+      content: "✓";
+    }
+
+    .checkbox-wrapper-16 .checkbox-input:checked+.checkbox-tile .checkbox-icon,
+    .checkbox-wrapper-16 .checkbox-input:checked+.checkbox-tile .checkbox-label {
+      color: #2260ff;
+    }
+
+    .checkbox-wrapper-16 .checkbox-input:focus+.checkbox-tile {
+      border-color: #2260ff;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #b5c9fc;
+    }
+
+    .checkbox-wrapper-16 .checkbox-input:focus+.checkbox-tile:before {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .checkbox-wrapper-16 .checkbox-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 7rem;
+      min-height: 7rem;
+      border-radius: 0.5rem;
+      border: 2px solid #b5bfd9;
+      background-color: #fff;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+      transition: 0.15s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .checkbox-wrapper-16 .checkbox-tile:before {
+      content: "";
+      font-size: 12px;
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 2px solid #b5bfd9;
+      border-radius: 50%;
+      top: 0.25rem;
+      left: 0.25rem;
+      opacity: 0;
+      transform: scale(0);
+      transition: 0.25s ease;
+    }
+
+    .checkbox-wrapper-16 .checkbox-tile:hover {
+      border-color: #2260ff;
+    }
+
+    .checkbox-wrapper-16 .checkbox-tile:hover:before {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .checkbox-wrapper-16 .checkbox-icon {
+      transition: 0.375s ease;
+      color: #494949;
+    }
+
+    .checkbox-wrapper-16 .checkbox-icon svg {
+      width: 3rem;
+      height: 3rem;
+    }
+
+    .checkbox-wrapper-16 .checkbox-label {
+      color: #707070;
+      transition: 0.375s ease;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-wrapper">
+    <div class="header">
+      <div class="header-left"></div>
+      <a href="javascript:void(0);" id="toggle_btn">
+        <i class="fe fe-text-align-left"></i>
+      </a>
+      <a class="mobile_btn" id="mobile_btn">
+        <i class="fa fa-bars"></i>
+      </a> >
+    </div>
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-inner ">
+        <div id="sidebar-menu" class="sidebar-menu">
+          <ul>
+            <li class="menu-title">
+              <div class="m-auto">
+                <a href="index.html" class="logo">
+                  <img src="../assets/img/logo.jpeg" alt="Logo">
+                </a>
+              </div> >
+            </li>
+            <hr>
+            <li class="menu-title">
+              <div class="user-header">
+                <div class="avatar avatar-sm">
+                  <i class="fe fe-user" style="font-size: 35px"></i>
                 </div>
-            </div>
-			<!-- /Sidebar -->
-			
-			<!-- Page Wrapper -->
-            <div class="page-wrapper">
-			
-                <div class="content container-fluid">
-
-					<div class="row">
-						<div class="col-md-12">
-						
-							 <!-- Recent Orders -->
-                             <div class="card card-table">
-                                <div class="card-header">
-                                    <h4 class="card-title">Kingdoms</h4>
-                                </div>
-                                <div class="card-body mt-3">
-                                    <form action="">
-                                        <div class="form-group row ms-5">
-                                            <label class="col-form-label col-md-2">Checkbox</label>
-                                            <div class="col-md-3">
-                                                <div class="checkbox border border-primary p-2">
-                                                    <label> Option 1</label>
-                                                    <input type="checkbox" name="checkbox" class="float-end">
-                                                </div>
-											</div>
-											<div class="col-md-3">
-                                                <div class="checkbox border border-primary p-2">
-                                                    <label> Option 2 </label>
-                                                    <input type="checkbox" name="checkbox" class="float-end">
-                                                </div>
-											</div>
-											<div class="col-md-3">
-                                                <div class="checkbox border border-primary p-2">
-                                                    <label> Option 3 </label>
-                                                    <input type="checkbox" name="checkbox" class="float-end">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <!-- /Recent Orders -->
-							
-						</div>
-					</div>
-				</div>			
-			</div>
-			<!-- /Page Wrapper -->
-		
+                <div class="user-text">
+                  <h6>Name</h6>
+                  <p class="text-muted mb-0">name@gmail.com</p>
+                </div>
+              </div>
+            </li>
+            <li>
+              <a href="doctor-dashboard.html">
+                <i class="fe fe-home"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="profile-setting.html">
+                <i class="fe fe-user-plus"></i>
+                <span>Profile</span>
+              </a>
+            </li>
+            <li>
+              <a href="my-patients.html">
+                <i class="fe fe-user-plus"></i>
+                <span>My Patients</span>
+              </a>
+            </li>
+            <li class="submenu ">
+              <a href="#">
+                <i class="fe fe-document"></i>
+                <span> Kingdoms</span>
+                <span class="menu-arrow"></span>
+              </a>
+              <ul style="display: none;">
+                <li>
+                  <a href="kingdom1.html">Animal</a>
+                </li>
+                <li class="active">
+                  <a href="kingdom2.html">Plant</a>
+                </li>
+                <li>
+                  <a href="kingdom3.html">Minerals</a>
+                </li>
+                <li>
+                  <a href="chart.html">Chart</a>
+                </li>
+                <li>
+                  <a href="DonutChart.html">Doughnut Chart</a>
+                </li>
+                <li>
+                  <a href="chart1.html">Histogram</a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="appointment-list.html">
+                <i class="fe fe-layout"></i>
+                <span>My Case</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fe fe-logout"></i>
+                <span>Logout</span>
+              </a>
+            </li>
+          </ul>
         </div>
-		<!-- /Main Wrapper -->
-		
-		<!-- jQuery -->
-        <script src="../assets/js/jquery-3.6.4.min.js"></script>
-		
-		<!-- Bootstrap Core JS -->
-        <script src="../assets/js/bootstrap.bundle.min.js"></script>
-		
-		<!-- Slimscroll JS -->
-        <script src="../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-		
-		<script src="../assets/plugins/raphael/raphael.min.js"></script>    
-		<script src="../assets/plugins/morris/morris.min.js"></script>  
-		<script src="../assets/js/chart.morris.js"></script>
-		
-		<!-- Custom JS -->
-		<script  src="../assets/js/script.js"></script>
-		
-    </body>
+      </div>
+    </div>
+    <!-- /Sidebar -->
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+      <div class="content container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- Recent Orders -->
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">Plants</h4>
+              </div>
+              <div class="card-body mt-3">
+                <form action="" id="checkboxForm">
+                  <div class="row ">
+                    <label class="text-center col-md-12"> Plants Checkbox</label>
+                    <div class="row ">
+                      <div class=" d-flex justify-content-center">
+                        <div class="checkbox-wrapper-16 mx-2">
+                          <label class="checkbox-wrapper">
+                            <input class="checkbox-input" name='graps' type="checkbox" id="plantcheckbox1">
+                            <span class="checkbox-tile">
+                              <span class="checkbox-icon">
+                                <svg width="800px" height="800px" viewBox="-21.73 0 240.563 240.563"
+                                  enable-background="new 0 0 197.097 240.563" id="Layer_1" version="1.1"
+                                  xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                                  xmlns:xlink="http://www.w3.org/1999/xlink">
+                                  <g>
+                                    <path
+                                      d="M197.097,107.427c-0.006-22.327-18.131-40.409-40.484-40.412c-10.746-0.002-20.533,4.201-27.78,11.032   c-2.942-3.31-6.42-6.13-10.298-8.333c4.204,0.279,8.896,0.554,13.899,0.785c1.039,0.046,2.006-0.562,2.415-1.52   c0.408-0.958,0.175-2.079-0.582-2.792c-1.159-1.097-2.19-2.102-3.086-2.989c5.291-0.418,13.649-1.414,22.049-3.791   c0.86-0.245,1.521-0.921,1.741-1.788c0.219-0.863-0.031-1.773-0.67-2.4c-3.218-2.91-7.671-4.093-10.923-4.748   c8.77-5.921,18.168-17.834,18.407-17.929l0.003-0.002l0.006-0.009c0.438-0.531,0.617-1.188,0.558-1.822   c0.182-0.354,0.292-0.75,0.286-1.174c-0.021-1.382-1.158-2.485-2.536-2.465c-0.285,0.239-17.725-0.102-27.972,4.294   c0.606-1.976,1.318-4.517,1.362-7.262c0.003-1.227-0.155-2.522-0.553-3.829c-0.259-0.854-0.958-1.508-1.83-1.707   c-0.87-0.201-1.785,0.078-2.393,0.734c-6.247,6.722-11.156,11.911-13.805,14.697c-0.745-1.398-1.763-3.573-3.027-6.887   c-0.381-0.996-1.359-1.644-2.425-1.606c-1.062,0.034-1.995,0.751-2.303,1.768c-2.829,9.282-5.615,18.655-7.678,25.652   C98.54,36.33,94.782,12.124,77.154,0.734c-2.354-1.439-5.432-0.696-6.871,1.658c-1.442,2.358-0.7,5.436,1.658,6.875   c5.765,3.234,9.788,9.746,12.54,17.339c-1.912-0.834-3.98-1.48-6.112-1.93c-1.997-2.572-4.753-5.16-8.38-7.717   c-6.782-4.796-13.075-6.92-18.654-6.923c-13.032,0.04-20.609,11.48-20.63,22.538c-0.018,6.909,2.931,14.048,9.432,18.49   c1.14,0.78,2.694,0.486,3.475-0.65c0.779-1.141,0.489-2.698-0.651-3.475c-4.974-3.409-7.24-8.8-7.254-14.365   c0.071-9.051,5.947-17.521,15.629-17.538c4.283-0.003,9.589,1.641,15.77,6.005c1.415,1.002,2.645,1.982,3.726,2.938   c-7.407,0.474-14.767,4.93-14.783,15.023c0.012,7.214,5.254,11.083,10.574,11.095c7.266-0.055,15.692-5.646,15.874-14.768   c-0.005-1.435-0.236-2.897-0.705-4.379c1.882,0.793,3.555,1.741,4.836,2.709c2.573,10.207,3.32,21.108,3.172,28.247   c0,1.319-0.019,2.489-0.045,3.502c-7.846,1.736-14.832,5.741-20.237,11.295c-7.348-7.554-17.655-12.264-29.031-12.264   C18.131,64.442,0.003,82.523,0,104.854c0.002,15.721,8.996,29.327,22.117,36.009c-2.271,5.053-3.538,10.66-3.536,16.538   c0.003,21.153,16.271,38.482,36.987,40.255c-0.05,0.826-0.085,1.655-0.085,2.492c0.005,22.33,18.13,40.412,40.484,40.415   c22.354-0.003,40.479-18.085,40.484-40.415c0-0.927-0.039-1.844-0.102-2.756c19.588-2.825,34.645-19.64,34.647-39.991   c0.002-4.021-0.603-7.914-1.704-11.593C185.435,140.495,197.092,125.332,197.097,107.427z M77.494,35.329   c-0.012,5.464-5.982,9.759-10.873,9.768c-3.374-0.259-5.349-1.203-5.573-6.094c0.19-7.787,4.528-9.777,11.069-10.07   c1.082-0.033,2.193,0.053,3.306,0.214C76.938,31.496,77.503,33.588,77.494,35.329z M109.953,35.284   c1.619,3.286,2.581,4.253,2.95,4.599c1.005,0.879,2.524,0.813,3.448-0.152c0.005-0.005,4.587-4.779,11.693-12.379   c-0.612,2.417-1.647,4.891-1.767,7.538c0,0.711,0.106,1.488,0.435,2.257c0.334,0.786,1.039,1.339,1.88,1.482   c0.838,0.144,1.687-0.146,2.263-0.777c1.58-2.044,9.29-4.105,16.156-4.83c3.114-0.385,6.084-0.614,8.417-0.751   c-1.455,1.647-3.435,3.818-5.651,6.059c-4.479,4.618-10.297,9.448-13.254,10.156c-0.814,0.225-1.462,0.846-1.719,1.65   c-0.256,0.803-0.089,1.687,0.447,2.34c2.776,2.531,6.723,2.908,10.14,3.694c-10.617,2.184-19.862,2.308-19.879,2.331   c-0.987,0.015-1.872,0.604-2.261,1.515c-0.391,0.907-0.213,1.955,0.458,2.68c0.017,0.018,0.869,0.943,2.375,2.473   c-9.88-0.554-17.992-1.224-22.591-1.638c3.549-3.274,14.479-12.708,29.472-19.622c0.504-0.23,0.723-0.823,0.489-1.324   c-0.23-0.504-0.823-0.723-1.327-0.49c-15.515,7.159-26.725,16.938-30.17,20.136C103.485,57.003,106.566,46.515,109.953,35.284z    M93.479,74.874c0.221,0.048,0.439,0.103,0.671,0.122c0.91,0.072,1.773-0.123,2.542-0.491c0.613-0.038,1.23-0.063,1.854-0.064   c16.844,0.028,30.455,13.625,30.483,30.414c-0.028,16.786-13.64,30.383-30.483,30.411c-16.841-0.028-30.452-13.625-30.483-30.411   C68.092,89.787,79.059,77.299,93.479,74.874z M9.998,104.854c0.031-16.789,13.643-30.386,30.486-30.414   c9.15,0,17.314,4.009,22.916,10.371c-3.388,5.908-5.334,12.745-5.335,20.043c0.001,7.295,1.946,14.131,5.332,20.037   c-5.593,6.361-13.764,10.375-22.913,10.375C23.641,135.237,10.029,121.64,9.998,104.854z M28.582,157.401   c0-4.719,1.084-9.155,2.995-13.129c2.867,0.643,5.846,0.994,8.907,0.994c11.379,0,21.676-4.711,29.029-12.266   c4.542,4.668,10.2,8.243,16.549,10.297c2.22,4.218,3.483,8.994,3.486,14.104c-0.031,16.789-13.643,30.383-30.483,30.415   C42.225,187.784,28.61,174.19,28.582,157.401z M95.968,230.562c-16.841-0.032-30.455-13.625-30.483-30.414   c0-0.97,0.049-1.925,0.136-2.868c12.655-2.059,23.339-9.968,29.17-20.865c6.195,11.576,17.863,19.788,31.556,21.188   c0.069,0.838,0.105,1.687,0.105,2.545C126.419,216.937,112.809,230.53,95.968,230.562z M161,157.401   c-0.031,16.789-13.643,30.383-30.483,30.415c-16.844-0.032-30.454-13.625-30.486-30.415c0.002-4.41,0.942-8.572,2.623-12.341   c9.128-0.919,17.354-4.871,23.67-10.822c7.412,8.339,18.247,13.605,30.289,13.605c0.947,0,1.885-0.044,2.815-0.108   C160.446,150.768,160.998,154.012,161,157.401z M156.612,137.842c-9.653,0-18.228-4.461-23.823-11.44   c3.947-6.237,6.241-13.622,6.242-21.548c-0.001-6.64-1.614-12.898-4.455-18.424c5.56-5.802,13.354-9.414,22.036-9.414   c16.841,0.029,30.454,13.625,30.483,30.411C187.066,124.216,173.453,137.81,156.612,137.842z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M98.547,130c8.498,0,16.015-4.244,20.528-10.724c0.313-0.455,0.204-1.077-0.25-1.394   c-0.452-0.316-1.077-0.204-1.391,0.248c-4.16,5.968-11.063,9.869-18.888,9.869c-0.553,0-0.999,0.449-0.999,1.002   S97.994,130,98.547,130z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M121.091,113.321c0.523,0.167,1.088-0.121,1.258-0.648c0.777-2.418,1.2-4.998,1.2-7.672   c0-0.553-0.449-1.001-1.002-1.001s-0.999,0.449-0.999,1.001c0,2.465-0.388,4.837-1.104,7.059   C120.276,112.586,120.563,113.151,121.091,113.321z"
+                                      fill="#231F20" />
+                                  </g>
+                                </svg>
+                              </span>
+                              <span class="checkbox-label mt-2">graps</span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="checkbox-wrapper-16 mx-2">
+                          <label class="checkbox-wrapper">
+                            <input class="checkbox-input" name="Apple" type="checkbox" id="plantcheckbox2">
+                            <span class="checkbox-tile">
+                              <span class="checkbox-icon">
+                                <svg fill="#000000" width="800px" height="800px" viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                  version="1.1">
+                                  <path
+                                    d="M20,10C22,13 17,22 15,22C13,22 13,21 12,21C11,21 11,22 9,22C7,22 2,13 4,10C6,7 9,7 11,8V5C5.38,8.07 4.11,3.78 4.11,3.78C4.11,3.78 6.77,0.19 11,5V3H13V8C15,7 18,7 20,10Z" />
+                                </svg>
+                              </span>
+                              <span class="checkbox-label mt-2">Apple</span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="checkbox-wrapper-16 mx-2">
+                          <label class="checkbox-wrapper">
+                            <input class="checkbox-input" name="Mango" type="checkbox" id="plantcheckbox3">
+                            <span class="checkbox-tile">
+                              <span class="checkbox-icon">
+                                <svg fill="#000000" height="800px" width="800px" version="1.2" baseProfile="tiny"
+                                  id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                  xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 256 256" xml:space="preserve">
+                                  <path id="XMLID_2_" d="M211.4,35.1l13.7-15.8l-9.1-7.9L178.2,55c-0.6-0.4-1.2-0.7-1.9-1c-0.5-0.1-0.5-0.1-0.5-0.1
+														  s-66.2-39.3-111.4,23C32.4,121.1,53.6,157.3,8,194.5c-9.8,7.5-9.6,22.8-1.1,30.3c19.5,14.9,85.3,43.7,147.4,1.8
+														  c62.6-42.3,59.9-92.5,53.3-123.5c-3.2-14.4-9.6-30.1-19.9-40.7l21.8-25.2c19,19.8,21.2,76.5,10,125.2c-10,43.5-31.7,78-54.6,91.2
+														  c30.9,1.5,76-33.1,87.9-84.6C264.8,116.6,241.8,47.9,211.4,35.1z" />
+                                </svg>
+                              </span>
+                              <span class="checkbox-label mt-2">Mango</span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="checkbox-wrapper-16 mx-2">
+                          <label class="checkbox-wrapper">
+                            <input class="checkbox-input" name="kiwi" type="checkbox" id="plantcheckbox4">
+                            <span class="checkbox-tile">
+                              <span class="checkbox-icon">
+                                <svg width="800px" height="800px" viewBox="-3.99 0 180.296 180.296"
+                                  enable-background="new 0 0 172.307 180.296" id="Layer_1" version="1.1"
+                                  xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                                  xmlns:xlink="http://www.w3.org/1999/xlink">
+                                  <g>
+                                    <path
+                                      d="M86.153,0C38.38,0.035,0.086,40.542,0,90.149c0.086,49.604,38.38,90.112,86.153,90.146   c47.773-0.034,86.067-40.542,86.153-90.146C172.221,40.542,133.927,0.035,86.153,0z M86.153,170.295   c-41.869-0.08-76.136-35.702-76.152-80.146c0.017-44.445,34.283-80.067,76.152-80.148c41.869,0.081,76.136,35.703,76.152,80.148   C162.289,134.593,128.022,170.215,86.153,170.295z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M55.797,87.492c0.121,0.003,0.238,0.006,0.356,0.006c3.763,0.043,5.657-1.644,6.025-2.196   c0.662-0.855,0.696-2.047,0.089-2.939c-0.184-0.247-2.239-3.271-6.661-3.575h0.003c-0.294-0.018-0.584-0.025-0.863-0.025   c-2.877,0.012-5.196,0.761-5.952,1.026c-0.042,0.012-0.082,0.031-0.125,0.045c-0.066,0.024-0.116,0.042-0.133,0.048   c-0.005,0.002-0.009,0.006-0.014,0.008c-0.365,0.144-0.705,0.363-0.979,0.681c-0.155,0.181-0.271,0.381-0.365,0.587   c-0.003,0.005-0.005,0.011-0.008,0.017c-0.088,0.193-0.151,0.394-0.188,0.6c0,0.001-0.001,0.002-0.001,0.003c0,0,0,0.001,0,0.002   c-0.07,0.41-0.037,0.829,0.096,1.225c0.01,0.027,0.021,0.054,0.031,0.081c0.06,0.157,0.135,0.309,0.227,0.454   c0.021,0.033,0.04,0.067,0.063,0.1c0.108,0.153,0.231,0.299,0.377,0.429c0.007,0.007,0.012,0.016,0.019,0.021   c0.001,0,0.003,0.003,0.005,0.003c0.002,0.002,0.003,0.004,0.005,0.006l0.005,0.006c0.031,0.027,0.068,0.046,0.102,0.071   C48.535,84.672,51.551,87.288,55.797,87.492z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M56.202,69.097c0.002,0.003,0.005,0.013,0.007,0.017c0.001,0.004,0.001,0.009,0.002,0.013l0.003,0.012   c0.006,0.022,0.02,0.04,0.027,0.062c0.199,0.621,1.004,3.827,3.902,6.05c1.73,1.258,3.299,1.661,4.396,1.652   c0.6,0,1.039-0.109,1.27-0.19c1.014-0.351,1.693-1.313,1.682-2.383c-0.018-0.303-0.023-3.4-2.988-5.764   c-2.128-1.625-4.31-2.268-5.063-2.466c-0.069-0.024-0.142-0.037-0.213-0.055c-0.025-0.007-0.046-0.013-0.057-0.016l-0.001,0.002   c-0.391-0.089-0.806-0.097-1.22,0.019c-1.319,0.365-2.095,1.727-1.743,3.047L56.202,69.097z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M103.285,72.197c0.348-0.014,3.411-0.009,5.783-2.916c1.665-2.13,2.334-4.324,2.535-5.055   c0.021-0.062,0.034-0.125,0.051-0.188c0.008-0.029,0.013-0.05,0.017-0.061c0.002-0.009,0.001-0.018,0.003-0.025   c0.091-0.399,0.097-0.815-0.012-1.213c-0.059-0.215-0.155-0.414-0.267-0.604c-0.003-0.005-0.006-0.009-0.008-0.013   c-0.106-0.179-0.233-0.343-0.38-0.489c-0.003-0.003-0.005-0.007-0.008-0.01c-0.002-0.002-0.004-0.003-0.006-0.004   c-0.151-0.15-0.314-0.287-0.501-0.394c-0.178-0.103-0.37-0.173-0.565-0.228c-0.024-0.007-0.048-0.011-0.072-0.017   c-0.166-0.042-0.334-0.065-0.505-0.073c-0.044-0.002-0.086-0.004-0.13-0.004c-0.176,0.001-0.351,0.02-0.523,0.059   c-0.02,0.005-0.039,0.002-0.058,0.007c-0.002,0.001-0.012,0.004-0.015,0.006c-0.011,0.002-0.021,0.002-0.031,0.005l-0.009,0.003   c-0.035,0.01-0.065,0.027-0.1,0.038c-0.727,0.214-3.84,1.007-6.041,3.813c-1.307,1.751-1.716,3.346-1.707,4.442   c-0.003,0.564,0.098,0.979,0.173,1.203C101.247,71.507,102.205,72.197,103.285,72.197z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M93.348,65.352c0.273-0.146,3.549-1.768,4.465-6.105c0.23-1.16,0.305-2.266,0.305-3.244   c-0.002-1.767-0.238-3.123-0.348-3.661c-0.007-0.051-0.021-0.1-0.031-0.15c-0.012-0.052-0.021-0.091-0.023-0.104   c-0.001-0.002-0.002-0.004-0.002-0.006c-0.092-0.391-0.269-0.767-0.554-1.088c-0.152-0.172-0.328-0.308-0.512-0.428   c-0.01-0.006-0.02-0.012-0.028-0.018c-0.173-0.108-0.354-0.195-0.544-0.258c-0.008-0.003-0.014-0.008-0.021-0.011   c-0.005-0.002-0.01-0.001-0.014-0.003c-0.393-0.123-0.807-0.148-1.212-0.073c-0.034,0.007-0.068,0.017-0.103,0.024   c-0.16,0.036-0.314,0.09-0.466,0.158c-0.038,0.017-0.075,0.031-0.111,0.05c-0.172,0.088-0.337,0.192-0.489,0.323   c-0.003,0.003-0.007,0.004-0.01,0.007l-0.002,0.002c-0.006,0.005-0.012,0.008-0.018,0.013l-0.006,0.009   c-0.021,0.019-0.037,0.042-0.057,0.062c-0.541,0.516-3.599,3.157-4.397,7.371c-0.126,0.761-0.182,1.454-0.182,2.082   c-0.022,2.66,1.061,4.177,1.457,4.551C91.203,65.634,92.371,65.832,93.348,65.352z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M102.781,79.573c-0.031,1.07,0.628,2.05,1.635,2.421c0.185,0.063,1.377,0.492,3.164,0.495   c1.509,0.003,3.483-0.331,5.436-1.534c3.301-2.058,5.324-4.806,5.868-5.581c0.033-0.041,0.06-0.087,0.09-0.129   c0.027-0.04,0.048-0.068,0.056-0.079l-0.003-0.002c0.228-0.346,0.381-0.739,0.417-1.155c0.055-0.657-0.155-1.322-0.578-1.825   c-0.414-0.492-1.015-0.806-1.655-0.874v-0.005c-0.069-0.006-0.671-0.068-1.598-0.068c-1.935,0.025-5.306,0.195-8.329,2.153   C103.365,75.923,102.747,78.87,102.781,79.573z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M119.029,89.396l-0.009-0.009c-0.01-0.007-0.021-0.01-0.029-0.017c-0.238-0.12-2.385-1.942-5.659-2.03   c-0.115,0-0.23,0.003-0.349,0.009h0.006c-2.882,0.095-4.442,1.54-4.778,2.142c-0.6,0.907-0.547,2.087,0.129,2.937   c0.202,0.233,1.849,2.309,5.142,2.357h0.118c2.274-0.057,4.04-0.752,4.697-1.036c0.039-0.013,0.074-0.033,0.112-0.048   c0.086-0.037,0.146-0.064,0.168-0.073l-0.001-0.002c0.354-0.17,0.673-0.411,0.914-0.726c0.399-0.521,0.581-1.195,0.494-1.849   C119.898,90.397,119.551,89.796,119.029,89.396z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M108.015,111.666c3.234,2.238,6.594,2.993,7.479,3.176c0.064,0.017,0.129,0.027,0.195,0.04   c0.006,0.001,0.021,0.004,0.024,0.005v-0.002c0.43,0.075,0.876,0.049,1.289-0.102c0.619-0.225,1.135-0.696,1.411-1.292   c0.264-0.564,0.296-1.216,0.109-1.809l0.009-0.003c-0.005-0.007-0.015-0.034-0.023-0.056c-0.005-0.015-0.007-0.03-0.012-0.045   l-0.002-0.012c-0.008-0.021-0.022-0.037-0.03-0.057c-0.326-0.909-1.799-5.396-5.788-8.116c-2.335-1.528-4.307-1.98-5.674-1.975   c-0.916,0-1.535,0.193-1.791,0.297c-0.996,0.4-1.627,1.394-1.566,2.464C103.677,104.48,103.896,108.715,108.015,111.666z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M98.098,112.903c-0.271,0-0.48,0.026-0.622,0.052c-1.054,0.199-1.865,1.051-2.013,2.11   c-0.014,0.098-0.046,0.363-0.046,0.76c-0.003,1.086,0.245,3.371,2.156,5.381c2.229,2.286,4.733,3.21,4.905,3.293l0.001-0.002   c0.352,0.136,0.73,0.203,1.11,0.172c0.656-0.058,1.275-0.377,1.699-0.878c0.426-0.504,0.639-1.169,0.581-1.825v-0.009l-0.006-0.061   c-0.089-0.213-0.25-3.828-2.997-6.661C100.999,113.382,99.143,112.881,98.098,112.903z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M71.065,109.829c-0.288,0.098-3.276,0.907-4.784,4.388c-1.008,2.452-1.057,4.706-1.068,5.513   c0,0.148,0.004,0.237,0.005,0.279c0.012,0.361,0.093,0.72,0.257,1.045c0.031,0.063,0.075,0.117,0.112,0.177   c0.004,0.006,0.009,0.013,0.013,0.02c0.109,0.173,0.235,0.332,0.383,0.474c0.004,0.004,0.007,0.008,0.012,0.012   c0.266,0.253,0.579,0.453,0.929,0.567c0.049,0.017,0.101,0.021,0.15,0.033c0.027,0.008,0.055,0.013,0.082,0.019   c0.168,0.038,0.337,0.059,0.509,0.062c0.038,0.001,0.075,0.003,0.113,0.002c0.19-0.005,0.381-0.026,0.565-0.074   c0.008-0.002,0.015-0.002,0.021-0.004c0.161-0.044,0.318-0.103,0.468-0.178l0.008-0.003c0.021-0.011,0.038-0.026,0.06-0.038   c0.018-0.009,0.038-0.013,0.056-0.022c0.158-0.17,3.409-1.759,4.912-5.409c0.457-1.218,0.639-2.283,0.639-3.179   c0.009-1.393-0.458-2.331-0.697-2.671C73.204,109.944,72.104,109.538,71.065,109.829z M68.995,115.347L68.995,115.347l-0.405-0.169   L68.995,115.347z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M82.521,61.02c0.195-0.23,1.644-1.745,1.681-4.463c0-0.345-0.028-0.708-0.086-1.076   c-0.425-2.566-1.583-4.362-1.796-4.706c-0.205-0.334-0.48-0.63-0.841-0.845c-0.046-0.027-0.095-0.042-0.142-0.065   c-0.003-0.002-0.007-0.003-0.01-0.005c-0.188-0.096-0.382-0.164-0.579-0.208c-0.007-0.001-0.013-0.003-0.019-0.005   c-0.422-0.091-0.851-0.073-1.253,0.049c-0.02,0.006-0.037,0.014-0.056,0.021c-0.166,0.055-0.324,0.127-0.477,0.216   c-0.036,0.021-0.071,0.04-0.106,0.063c-0.146,0.095-0.281,0.204-0.406,0.329c-0.017,0.017-0.036,0.03-0.053,0.048   c-0.122,0.13-0.233,0.272-0.329,0.432l-0.003,0.008c-0.007,0.012-0.011,0.025-0.018,0.037s-0.017,0.021-0.023,0.032   c-0.071,0.185-1.249,2.137-1.292,4.868c0,0.438,0.037,0.898,0.126,1.373c0.496,2.842,2.143,4.186,2.784,4.437   C80.604,62.026,81.774,61.811,82.521,61.02z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M87.507,129.58c0.001-0.001,0.002-0.002,0.003-0.003c0.148-0.116,0.279-0.25,0.397-0.396   c0.033-0.04,0.063-0.081,0.093-0.123c0.087-0.122,0.162-0.251,0.227-0.387c0.016-0.033,0.04-0.06,0.055-0.094   c0.005-0.014,0.021-0.054,0.04-0.104c0.001-0.002,0.002-0.003,0.003-0.005l0.006-0.011c0.002-0.005,0.002-0.01,0.004-0.015   c0.245-0.62,1.287-3.313,1.306-6.593c0-1.073-0.118-2.222-0.464-3.38c-1.281-4.493-3.918-5.944-4.603-6.117   c-1.017-0.34-2.147,0.009-2.793,0.864c-0.155,0.232-1.819,2.412-1.845,5.915c0,0.821,0.098,1.705,0.339,2.623   c1.028,3.843,3.129,6.612,3.657,7.287c0.031,0.044,0.065,0.084,0.099,0.126c0.009,0.011,0.021,0.026,0.024,0.031   c0.007,0.008,0.017,0.014,0.022,0.021c0.129,0.151,0.274,0.285,0.436,0.402c0.008,0.006,0.016,0.013,0.023,0.019   c0.182,0.129,0.373,0.243,0.584,0.32c0.386,0.14,0.8,0.169,1.203,0.112c0.007-0.001,0.014,0.001,0.021,0   c0.006-0.001,0.012-0.004,0.018-0.005c0.23-0.036,0.458-0.092,0.67-0.19C87.202,129.8,87.359,129.695,87.507,129.58z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M66.555,55.083c-0.004-0.002-0.009-0.002-0.013-0.004c-0.335-0.16-0.701-0.255-1.075-0.255   c-0.26,0-0.514,0.053-0.759,0.132c-0.011,0.003-0.021,0.006-0.03,0.009c-0.364,0.123-0.704,0.317-0.979,0.591   c-0.028,0.028-0.048,0.063-0.075,0.092c-0.004,0.005-0.008,0.011-0.013,0.016c-0.124,0.141-0.23,0.294-0.32,0.458   c-0.02,0.034-0.038,0.067-0.055,0.103c-0.074,0.151-0.134,0.308-0.177,0.47c-0.008,0.032-0.021,0.063-0.028,0.096   c-0.039,0.175-0.063,0.354-0.063,0.534v0.011c0,0.012,0.004,0.023,0.004,0.035s-0.004,0.022-0.004,0.034   c0.075,0.219-0.012,5.51,3.382,9.566c2.672,3.112,5.307,3.699,6.383,3.665c0.146,0,0.262-0.006,0.343-0.018   c1.067-0.109,1.948-0.898,2.182-1.943c0.029-0.135,0.164-0.786,0.164-1.779c0.003-1.595-0.371-4.203-2.337-6.612   C70.242,56.834,66.719,55.178,66.555,55.083z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M51.169,96.868c0.129,0.104,0.269,0.193,0.419,0.271c0.039,0.02,0.076,0.041,0.116,0.059   c0.156,0.07,0.321,0.125,0.495,0.162c0.022,0.005,0.042,0.018,0.064,0.021c0.006,0.001,0.022,0.004,0.032,0.006l0.009,0.003   c0.004,0.001,0.007,0,0.011,0.001c0.22,0.04,1.071,0.181,2.258,0.181c1.347-0.012,3.144-0.155,4.935-1.129   c2.938-1.56,3.716-3.794,3.739-4.496c0.118-1.068-0.461-2.093-1.434-2.542c-0.208-0.09-1.308-0.591-2.988-0.599   c-1.014-0.003-2.251,0.204-3.495,0.84c-2.394,1.241-3.901,2.943-4.394,3.53c-0.035,0.037-0.065,0.079-0.1,0.118   c-0.031,0.038-0.067,0.083-0.078,0.095c-0.005,0.006-0.007,0.014-0.012,0.02c-0.239,0.311-0.417,0.676-0.489,1.089   c-0.04,0.231-0.036,0.458-0.014,0.681c0.001,0.004,0.002,0.009,0.002,0.013c0.022,0.208,0.069,0.408,0.141,0.6   c0.002,0.006,0.002,0.012,0.004,0.017c0.001,0.003,0.003,0.006,0.005,0.009c0.148,0.387,0.391,0.729,0.705,0.999   C51.123,96.833,51.146,96.85,51.169,96.868z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M67.663,104.486c-0.124-1.065-0.922-1.938-1.97-2.156c-0.132-0.026-0.73-0.145-1.644-0.145   c-1.586-0.006-4.263,0.372-6.716,2.433c-2.992,2.544-4.592,5.594-4.999,6.404c-0.031,0.054-0.056,0.109-0.083,0.165   c-0.007,0.014-0.017,0.032-0.02,0.038c-0.003,0.008-0.004,0.016-0.007,0.023c-0.174,0.379-0.265,0.802-0.227,1.246   c0.095,1.101,0.893,1.961,1.911,2.206c0.037,0.009,0.073,0.017,0.111,0.024c0.157,0.03,0.317,0.044,0.481,0.043   c0.033,0,0.065,0.01,0.099,0.009c0.007-0.002,0.032-0.005,0.048-0.007c0.019-0.001,0.037,0.003,0.056,0.001h0.009   c0.028-0.003,0.056-0.013,0.084-0.016c0.995-0.081,5.679-0.359,9.315-3.496c3.017-2.672,3.602-5.269,3.572-6.379   C67.686,104.711,67.674,104.578,67.663,104.486z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M149.616,96.469c-0.553,0-1.002,0.449-1.002,0.999c0,4.721-0.538,9.313-1.555,13.72   c-0.123,0.538,0.21,1.074,0.749,1.198c0.538,0.126,1.076-0.211,1.2-0.749c1.051-4.554,1.606-9.296,1.606-14.169   C150.615,96.918,150.166,96.469,149.616,96.469z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M145.672,119.251c-0.515-0.201-1.097,0.05-1.298,0.562c-8.884,22.438-30.74,38.303-56.298,38.303   c-0.553,0-0.999,0.446-0.999,0.999s0.446,0.998,0.999,0.998c26.401,0,48.982-16.386,58.157-39.563   C146.436,120.037,146.185,119.456,145.672,119.251z"
+                                      fill="#231F20" />
+                                  </g>
+                                </svg>
+                              </span>
+                              <span class="checkbox-label mt-2">kiwi</span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="checkbox-wrapper-16 mx-2">
+                          <label class="checkbox-wrapper">
+                            <input class="checkbox-input" name="Straberry" type="checkbox" id="plantcheckbox5">
+                            <span class="checkbox-tile">
+                              <span class="checkbox-icon">
+                                <svg width="800px" height="800px" viewBox="-24.79 0 194.258 194.258"
+                                  enable-background="new 0 0 144.685 194.258" id="Layer_1" version="1.1"
+                                  xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                                  xmlns:xlink="http://www.w3.org/1999/xlink">
+                                  <g>
+                                    <path
+                                      d="M112.488,24.81c-0.419-0.139-2.538-0.883-4.213-1.406h0c-1.305-0.466-2.847-0.957-4.662-1.663   c-3.1-0.952-6.601-1.824-10.104-2.521c-0.078,0.043-0.607-0.411-1.402-1.868c-0.832-1.206-1.69-3.501-4.765-4.024h0.003   c-0.167-0.018-0.328-0.026-0.486-0.026c-4.215,0.248-11.737,5.065-12.386,5.009L73.78,2.393c-0.058-1.379-1.227-2.45-2.605-2.39   s-2.45,1.227-2.39,2.608l0.638,14.666c-2.551-0.85-9.299-3.061-12.907-3.137c-0.098,0-0.202,0-0.314,0.006h0.009   c-3.104-0.236-4.382,3.541-4.361,4.076l0.008,0.207c-0.003,0,0.009,0.104-0.582,0.059c-3.814,0.348-7.499,0.8-10.378,1.425   c-2.257,0.852-4.502,0.555-5.787,2.985C16.633,28.06-0.426,43.934,0.008,78.15c0,9.809,1.261,21.153,4.027,34.355   c10.58,49.507,29.835,81.016,57.59,81.752c25.59-0.576,50.019-27.582,73.317-84.219c6.74-16.564,9.733-30.195,9.739-41.613   C144.941,43.68,129.56,30.118,112.488,24.81z M51.729,23.468c3.101,0.093,5.133-3.037,5.023-4.264   c0.005-0.025,0.008-0.04,0.013-0.064c2.244,0.09,8.846,2.173,11.197,2.927l2.01,3.351c0.694,1.157,2.179,1.555,3.36,0.898   c1.072-0.598,1.528-1.87,1.137-2.999c0.09-0.008,0.194-0.016,0.331-0.021c3.331-0.591,10.589-5.169,12.019-4.993l0.003,0.117   c0.985,0.656,1.494,4.447,5.711,5.706c3.345,0.664,6.702,1.499,9.609,2.395c1.718,0.527,3.111,1.023,4.196,1.468   c-1.579,0.202-3.657,0.346-5.935,0.317c-0.53,0-1.077-0.006-1.633-0.018c-4.709-0.095-7.038-0.392-8.486-0.403   c-0.346,0.009-0.645-0.009-1.224,0.15c-0.463,0-2.029,1.062-1.96,2.556c0.858,3.222,1.448,2.188,2.456,3.766   c0.996,1.1,2.306,2.703,3.65,5.13c1.022,1.837,1.367,3.403,1.364,4.479c0.003,0.757-0.174,1.239-0.291,1.437   c-0.263-0.135-0.828-0.626-1.603-2.352c-2.985-5.901-7.079-11.85-12.877-12.324c-2.775-0.069-5.086,2.223-5.904,5.106   c-1.151,3.524-2.237,7.938-3.391,11.372c-0.567,1.704-1.169,3.169-1.675,4.013c-0.015,0.025-0.028,0.044-0.042,0.067   c-0.698-1.094-1.076-2.877-1.063-5.014c-0.017-3.964,1.143-8.328,1.192-11.25c-0.003-0.763-0.15-3.606-3.173-3.892   c-1.223,0.046-1.854,0.495-2.533,0.93c-1.798,1.354-6.798,3.583-11.017,5.148c3.524-2.804,7.136-5.135,7.136-5.146   c0.916-0.588,1.35-1.707,1.065-2.758c-0.282-1.051-1.221-1.803-2.306-1.849c-0.052,0.057-10.553-0.591-16.315-2.639   c0.366-0.077,0.752-0.152,1.175-0.217C45.36,24.139,48.49,23.762,51.729,23.468z M125.682,106.268   c-22.547,55.933-46.927,78.568-64.056,77.992c-18.165,0.737-37.79-25.111-47.802-73.807c-2.66-12.669-3.817-23.353-3.817-32.303   c0.458-32.789,14.057-41.863,30.423-46.276c0.594-0.144,2.278-0.591,5.015-0.917c1.889,0.393,3.773,0.678,5.487,0.888   c-2.464,1.859-5.243,4.156-7.286,6.429c-0.533,0.686-1.146,1.203-1.247,2.738c0.228,2.749,2.838,2.977,3.443,2.979   c4.105-0.179,12.529-3.544,17.792-6.4c-0.349,2.291-0.898,5.541-0.911,8.68c0.017,2.917,0.438,6.025,2.467,8.56   c0.815,1.004,1.998,1.957,3.63,1.975c4.592-0.832,4.879-4.479,6.425-8.012c1.244-3.723,2.335-8.156,3.403-11.406   c0.751-1.899,0.961-1.592,1.151-1.661c1.08-0.472,6.221,4.252,8.334,9.417c1.442,3.077,3.429,5.208,6.31,5.309   c3.524-0.118,5.122-3.44,5.125-6.486c-0.003-2.093-0.625-4.441-1.989-6.903c-0.86-1.556-1.727-2.839-2.53-3.902   c1.049,0.051,2.244,0.097,3.621,0.125c0.59,0.012,1.169,0.018,1.733,0.018c1.164-0.001,2.266-0.026,3.305-0.076   c2.71,0.37,5.115,0.905,5.64,1.078c14.716,5.199,25.074,13.654,25.333,34.122C134.689,78.064,132.099,90.523,125.682,106.268z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M87.498,132.942c-2.162,0-3.913,1.751-3.913,3.909c0,2.162,1.75,3.913,3.913,3.913   c2.159,0,3.906-1.751,3.909-3.913C91.404,134.693,89.656,132.942,87.498,132.942z M87.498,138.764   c-1.057,0-1.912-0.855-1.912-1.912c0-1.053,0.855-1.908,1.912-1.911c1.05,0.003,1.906,0.858,1.909,1.911   C89.403,137.908,88.548,138.764,87.498,138.764z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M51.746,128.783c-2.159,0-3.909,1.75-3.909,3.909c0,2.162,1.75,3.912,3.909,3.912   c2.159,0,3.91-1.75,3.91-3.912C55.655,130.533,53.905,128.783,51.746,128.783z M51.746,134.604c-1.053,0-1.909-0.854-1.912-1.911   c0.003-1.054,0.858-1.909,1.912-1.912c1.054,0.003,1.909,0.855,1.909,1.912S52.799,134.604,51.746,134.604z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M50.666,61.983c0-1.701-1.376-3.08-3.077-3.08c-1.702,0-3.078,1.379-3.078,3.08   c0,1.698,1.376,3.077,3.078,3.077C49.29,65.061,50.666,63.682,50.666,61.983z M47.589,63.063c-0.596-0.002-1.077-0.483-1.08-1.079   c0.003-0.599,0.486-1.079,1.08-1.082c0.596,0.003,1.077,0.483,1.08,1.082C48.666,62.579,48.185,63.061,47.589,63.063z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M28.05,83.027c-1.929,0-3.495,1.566-3.495,3.495c0,1.932,1.563,3.495,3.495,3.497   c1.932-0.002,3.495-1.565,3.495-3.497C31.545,84.594,29.982,83.027,28.05,83.027z M28.05,88.02   c-0.823-0.003-1.494-0.671-1.494-1.497s0.67-1.494,1.494-1.494s1.494,0.668,1.494,1.494S28.874,88.017,28.05,88.02z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M80.427,68.052c-1.929,0.003-3.492,1.566-3.492,3.498c0,1.929,1.563,3.495,3.492,3.495   c1.932,0,3.495-1.566,3.495-3.495C83.922,69.618,82.359,68.055,80.427,68.052z M80.427,73.044c-0.824,0-1.492-0.668-1.494-1.494   c0.002-0.826,0.67-1.494,1.494-1.497c0.826,0.003,1.494,0.671,1.497,1.497C81.921,72.376,81.253,73.044,80.427,73.044z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M98.305,89.684c-1.702,0-3.078,1.378-3.081,3.08c0,1.701,1.379,3.077,3.081,3.077   c1.701,0,3.077-1.376,3.077-3.077C101.382,91.062,100.006,89.684,98.305,89.684z M98.305,93.843   c-0.596-0.003-1.08-0.483-1.08-1.079c0-0.599,0.484-1.08,1.08-1.083c0.593,0.003,1.076,0.484,1.076,1.083   C99.381,93.359,98.897,93.84,98.305,93.843z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M60.644,96.506c0-1.932-1.563-3.495-3.495-3.495c-1.929,0-3.495,1.563-3.495,3.495s1.563,3.495,3.495,3.495   S60.644,98.438,60.644,96.506z M57.149,98.003c-0.824-0.003-1.494-0.671-1.494-1.497s0.67-1.494,1.494-1.494   c0.823,0,1.494,0.668,1.494,1.494S57.973,98,57.149,98.003z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M61.724,158.73c-2.162,0-3.912,1.751-3.912,3.91c0,2.162,1.75,3.912,3.912,3.912   c2.159,0,3.909-1.75,3.909-3.912C65.633,160.481,63.883,158.73,61.724,158.73z M61.724,164.552c-1.057,0-1.909-0.855-1.912-1.911   c0.003-1.054,0.855-1.909,1.912-1.912c1.054,0.003,1.906,0.858,1.909,1.912C63.629,163.696,62.777,164.552,61.724,164.552z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M118.775,63.837c-0.53,0.159-0.832,0.714-0.674,1.244c1.272,4.298,1.915,8.766,1.915,13.254   c0,7.891-1.983,15.836-5.997,23.024c-0.268,0.48-0.095,1.091,0.386,1.361c0.484,0.268,1.091,0.096,1.362-0.386   c4.18-7.493,6.25-15.775,6.25-24c0-4.678-0.668-9.339-1.998-13.824C119.861,63.981,119.305,63.679,118.775,63.837z"
+                                      fill="#231F20" />
+                                    <path
+                                      d="M116.599,58.284c0.495-0.245,0.697-0.844,0.452-1.339c-1.37-2.775-3.022-5.435-4.957-7.937   c-0.337-0.438-0.964-0.519-1.402-0.182c-0.438,0.337-0.518,0.965-0.179,1.402c1.851,2.397,3.435,4.942,4.747,7.6   C115.505,58.324,116.104,58.529,116.599,58.284z"
+                                      fill="#231F20" />
+                                  </g>
+                                </svg>
+                              </span>
+                              <span class="checkbox-label mt-2">Straberry</span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 d-flex mt-3 justify-content-center">
+                        <div class="checkbox-wrapper-16 mx-2">
+                          <label class="checkbox-wrapper">
+                            <input class="checkbox-input" name="Bnana" type="checkbox" id="plantcheckbox6">
+                            <span class="checkbox-tile">
+                              <span class="checkbox-icon">
+                                <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg"
+                                  xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve">
+                                  <style type="text/css">
+                                    .st0 {
+                                      fill: none;
+                                      stroke: #000000;
+                                      stroke-width: 2;
+                                      stroke-linecap: round;
+                                      stroke-linejoin: round;
+                                      stroke-miterlimit: 10;
+                                    }
+                                  </style>
+                                  <path d="M29.4,11.4L29,7.9V3c0-0.6-0.4-1-1-1h-5c-0.6,0-1,0.4-1,1l0,3.7C17.4,15,14.6,17,3.1,16c-0.3,0-0.6,0.1-0.8,0.3S2,16.7,2,17
+													   v3c0,0.6,0.4,1,1,1s1-0.4,1-1v-1.9c9.3,0.7,13.4-0.7,17.5-6.7C19.8,19.4,14.4,21,5,21c-0.6,0-1,0.4-1,1v5c0,0.5,0.3,0.9,0.8,1
+													   C5,28,10,29,16,29c4.4,0,8-1.6,10.5-4.5C29.2,21.3,30.3,16.6,29.4,11.4z" />
+                                </svg>
+                              </span>
+                              <span class="checkbox-label mt-2">Bnana</span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="checkbox-wrapper-16 mx-2">
+                          <label class="checkbox-wrapper">
+                            <input class="checkbox-input" name="Lemone" type="checkbox" id="plantcheckbox7">
+                            <span class="checkbox-tile">
+                              <span class="checkbox-icon">
+                                <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg"
+                                  xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve">
+                                  <style type="text/css">
+                                    .st0 {
+                                      fill: none;
+                                      stroke: #000000;
+                                      stroke-width: 2;
+                                      stroke-linecap: round;
+                                      stroke-linejoin: round;
+                                      stroke-miterlimit: 10;
+                                    }
+                                  </style>
+                                  <g>
+                                    <path
+                                      d="M15.3,28.6c-1.4,0-2.9-0.2-4.2-0.7c-0.4-0.1-0.9-0.3-1.4-0.1c-1.6,0.5-3.3,0.1-4.5-1.1c-1.2-1.2-1.6-2.9-1.1-4.5
+														   c0.2-0.5,0-1-0.1-1.4c-1.7-4.6-0.4-10,3.2-13.6s9-4.9,13.6-3.2c0.4,0.1,0.9,0.3,1.4,0.1c1.6-0.5,3.3-0.1,4.5,1.1l0,0
+														   c1.2,1.2,1.6,2.9,1.1,4.5c-0.2,0.5,0,1,0.1,1.4c1.7,4.6,0.4,10-3.2,13.6C22.1,27.3,18.7,28.6,15.3,28.6z" />
+                                  </g>
+                                </svg>
+                              </span>
+                              <span class="checkbox-label mt-2">Lemone</span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="checkbox-wrapper-16 mx-2">
+                          <label class="checkbox-wrapper">
+                            <input class="checkbox-input" name="pyrus" type="checkbox" id="plantcheckbox8">
+                            <span class="checkbox-tile">
+                              <span class="checkbox-icon">
+                                <svg fill="#000000" width="800px" height="800px" viewBox="0 0 50 50"
+                                  enable-background="new 0 0 50 50" version="1.1" xml:space="preserve"
+                                  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                  <g id="Layer_13" />
+                                  <g id="Layer_12" />
+                                  <g id="Layer_11" />
+                                  <g id="Layer_10" />
+                                  <g id="Layer_9" />
+                                  <g id="Layer_8" />
+                                  <g id="Layer_7">
+                                    <path clip-rule="evenodd"
+                                      d="M33.851,3.562c-1.29,3.689-3.041,6.811-7.426,6.621   C26.739,5.816,30.032,4.426,33.851,3.562 M12.541,30.622c-2.415,3.976-2.471,8.635-0.023,12.613c5.494,8.925,19.351,9.115,24.96,0   c2.456-3.993,2.398-8.625-0.028-12.614c-3.184-5.24-5.412-10.433-7.015-16.352c-0.161-0.593-0.418-1.148-0.75-1.648   C34.973,10.978,36.518,4.735,37.848,0c-4.519,0.729-10.362,1.475-12.966,5.71c-0.451-0.517-1.019-0.963-1.73-1.367l-1.39,2.449   c0.746,0.423,1.194,0.895,1.444,1.52c0.205,0.512,0.312,1.159,0.358,1.971c-1.938,0.515-3.477,2.045-4.002,3.985   C18.139,19.518,15.555,26.102,12.541,30.622z M16.892,33.265l2.123,1.285c-2.533,4.166,1.972,7.914,5.983,7.914v2.493   C19.078,44.956,13.312,39.154,16.892,33.265z"
+                                      fill-rule="evenodd" />
+                                  </g>
+                                  <g id="Layer_6" />
+                                  <g id="Layer_5" />
+                                  <g id="Layer_4" />
+                                  <g id="Layer_3" />
+                                  <g id="Layer_2" />
+                                </svg>
+                              </span>
+                              <span class="checkbox-label mt-2">pyrus</span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="checkbox-wrapper-16 mx-2">
+                          <label class="checkbox-wrapper">
+                            <input class="checkbox-input" name="pyrus" type="checkbox" id="plantcheckbox9">
+                            <span class="checkbox-tile">
+                              <span class="checkbox-icon">
+                                <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg"
+                                  xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve">
+                                  <g>
+                                    <path
+                                      d="M27.4,14.1c-1-1.7-1.7-3.6-1.9-5.5l-0.1-1C25,5,22.9,3,20.5,3c-0.4,0-0.8,0.1-1.1,0.2c1,1.1,1.7,2.6,2,4.2l0.1,1
+														   c0.2,1.6,0.8,3.2,1.7,4.7c1.2,2.1,1.9,4.7,1.9,7.3c0,4.1-1.7,7.6-4.4,9.6c4.9-0.1,8.4-4.1,8.4-9.6C29,18.1,28.4,16,27.4,14.1z" />
+                                    <path d="M21.4,14.1c-1-1.7-1.7-3.6-1.9-5.5l-0.1-1C19,5,16.9,3,14.5,3S10,5,9.7,7.7l-0.1,1c-0.3,1.9-0.9,3.7-1.9,5.5
+														   C6.6,16,6,18.1,6,20.4C6,26,9.6,30,14.5,30s8.5-4,8.5-9.6C23,18.1,22.4,16,21.4,14.1z M14.5,25C12,25,10,22.8,10,20
+														   c0-2.5,1.8-6.1,4.5-6.1S19,17.5,19,20C19,22.8,17,25,14.5,25z" />
+                                  </g>
+                                </svg>
+                              </span>
+                              <span class="checkbox-label mt-2">pyrus</span>
+                            </span>
+                          </label>
+                        </div>
+                        <div class="checkbox-wrapper-16 mx-2">
+                          <label class="checkbox-wrapper">
+                            <input class="checkbox-input" name="cherries" type="checkbox" id="plantcheckbox10">
+                            <span class="checkbox-tile">
+                              <span class="checkbox-icon">
+                                <svg version="1.1" id="Icons" xmlns="http://www.w3.org/2000/svg"
+                                  xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32" xml:space="preserve">
+                                  <g>
+                                    <path d="M29.3,13c0-0.2-0.9-4.3-3.8-5.6c-2.9-1.3-6.6,0.7-6.7,0.8c-0.4,0.2-0.6,0.6-0.5,1.1c0,0.2,0.9,4.3,3.8,5.6
+														   c0.7,0.3,1.5,0.4,2.2,0.4c2.3,0,4.4-1.2,4.5-1.3C29.2,13.9,29.4,13.4,29.3,13z" />
+                                    <path d="M18.7,19.5c-2.2-3.7-2.7-8.2-1.5-12.4C19.5,5.8,22.1,5,25,5c0.6,0,1-0.4,1-1s-0.4-1-1-1C16.4,3,9.3,9,7.5,17
+														   C4.1,17.2,2,19.1,2,22c0,3.3,2.7,6,6,6s6-2.7,6-6c0-2.6-1.7-4.4-4.5-4.9c0.8-3.3,2.7-6.2,5.2-8.4c-0.6,4.1,0.2,8.3,2.3,11.9
+														   c-2.1,1.8-2.5,4.3-1.1,6.4c0.8,1.3,2.2,2.3,3.7,2.7c0.5,0.1,0.9,0.2,1.4,0.2c1.1,0,2.1-0.3,3.1-0.9c2.7-1.7,3.5-5.4,1.8-8.2
+														   C24.3,18.4,21.5,18,18.7,19.5z" />
+                                  </g>
+                                </svg>
+                              </span>
+                              <span class="checkbox-label mt-2">cherries</span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- <button type="submit" onclick="sendData()">Submit</button> -->
+                    <div class="text-center">
+                      <button type="submit" class="mb-2 custom-button" onclick="sendData()"
+                        style="margin-top: 28px;">Submit</button>
+                    </div>
+                </form>
+              </div>
+            </div>
+            <!-- /Recent Orders -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Page Wrapper -->
+  </div>
+  <!-- /Main Wrapper -->
+  <!-- jQuery -->
+  <script src="../assets/js/jquery-3.6.4.min.js"></script>
+  <!-- Bootstrap Core JS -->
+  <script src="../assets/js/bootstrap.bundle.min.js"></script>
+  <!-- Slimscroll JS -->
+  <script src="../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+  <script src="../assets/plugins/raphael/raphael.min.js"></script>
+  <script src="../assets/plugins/morris/morris.min.js"></script>
+  <script src="../assets/js/chart.morris.js"></script>
+  <!-- Custom JS -->
+  <script src="../assets/js/script.js"></script>
+  <script>
+    /* function toggleCheckbox(checkbox) {
+          if (checkbox.checked) {
+              checkbox.parentElement.classList.add('disabled');
+              checkbox.disabled = true;
+          } else {
+              checkbox.parentElement.classList.remove('disabled');
+              checkbox.disabled = false;
+          }
+      }*/
+    function sendData() {
+      var form = document.getElementById("checkboxForm");
+      var checkboxes = form.querySelectorAll('input[type=checkbox]:checked');
+      var data = {};
+      checkboxes.forEach(function (checkbox) {
+        data[checkbox.name] = checkbox.value;
+      });
+      localStorage.setItem('plantsData', JSON.stringify(data));
+    }
+
+    function toggleCheckbox(checkbox) {
+      if (!checkbox.disabled) {
+        checkbox.parentElement.classList.toggle('disabled');
+      }
+    }
+  </script>
+</body>
+
 </html>
